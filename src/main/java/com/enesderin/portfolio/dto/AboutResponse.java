@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DtoUser {
-
-    private String username;
-    private String password;
+public class AboutResponse {
+    private String description;
+    private String cvUrl;
+    private String imageUrl;
 }

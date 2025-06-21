@@ -1,10 +1,10 @@
 package com.enesderin.portfolio.controller.impl;
 
 import com.enesderin.portfolio.controller.IRestAuthController;
-import com.enesderin.portfolio.dto.AuthRequest;
-import com.enesderin.portfolio.dto.AuthResponse;
-import com.enesderin.portfolio.dto.DtoUser;
-import com.enesderin.portfolio.dto.RefreshTokenRequest;
+import com.enesderin.portfolio.jwt.jwtDto.AuthRequest;
+import com.enesderin.portfolio.jwt.jwtDto.AuthResponse;
+import com.enesderin.portfolio.jwt.jwtDto.DtoUser;
+import com.enesderin.portfolio.jwt.jwtDto.RefreshTokenRequest;
 import com.enesderin.portfolio.service.IAuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

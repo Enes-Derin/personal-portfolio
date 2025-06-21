@@ -1,6 +1,5 @@
-package com.enesderin.portfolio.dto;
+package com.enesderin.portfolio.jwt.jwtDto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
+public class DtoUser {
 
-    @NotEmpty
     private String username;
-
-    @NotEmpty
     private String password;
 }

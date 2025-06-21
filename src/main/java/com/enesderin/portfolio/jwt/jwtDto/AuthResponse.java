@@ -1,4 +1,4 @@
-package com.enesderin.portfolio.dto;
+package com.enesderin.portfolio.jwt.jwtDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

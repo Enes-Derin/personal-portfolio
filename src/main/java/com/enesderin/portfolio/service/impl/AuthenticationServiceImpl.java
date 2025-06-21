@@ -1,9 +1,9 @@
 package com.enesderin.portfolio.service.impl;
 
-import com.enesderin.portfolio.dto.AuthRequest;
-import com.enesderin.portfolio.dto.AuthResponse;
-import com.enesderin.portfolio.dto.DtoUser;
-import com.enesderin.portfolio.dto.RefreshTokenRequest;
+import com.enesderin.portfolio.jwt.jwtDto.AuthRequest;
+import com.enesderin.portfolio.jwt.jwtDto.AuthResponse;
+import com.enesderin.portfolio.jwt.jwtDto.DtoUser;
+import com.enesderin.portfolio.jwt.jwtDto.RefreshTokenRequest;
 import com.enesderin.portfolio.jwt.JWTService;
 import com.enesderin.portfolio.model.RefreshToken;
 import com.enesderin.portfolio.model.Role;
@@ -15,11 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
