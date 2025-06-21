@@ -30,6 +30,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         String token = header.substring(7);
@@ -48,6 +49,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
        }catch (Exception e) {
            throw new ServletException(e);
        }
-        doFilterInternal(request, response, filterChain);
+        filterChain.doFilter(request, response);
     }
 }

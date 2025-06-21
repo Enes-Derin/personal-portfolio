@@ -39,8 +39,8 @@ public class JWTService {
     }
 
     public <T> T exportToken(String token, Function<Claims, T> claimsFunction) {
-        getClaims(token);
-        return claimsFunction.apply(getClaims(token));
+        Claims claims = getClaims(token);
+        return claimsFunction.apply(claims);
     }
 
     public String getUsernameToken(String token) {
@@ -49,7 +49,7 @@ public class JWTService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         Date expiredDate = exportToken(token, Claims::getExpiration);
-        return expiredDate.before(new Date());
+        return expiredDate.after(new Date());
     }
 
     public Key getKey() {
