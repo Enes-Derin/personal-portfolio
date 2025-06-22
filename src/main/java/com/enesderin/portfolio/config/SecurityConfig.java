@@ -17,7 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String ADMIN = "/admin/**";
+    private final String[] ADMIN_PATHS = {
+            "/admin/**",
+            "/project/admin/**",
+            "/about/admin/**",
+            "/skill/admin/**",
+    };
     private final String REGISTER = "/register";
     private final String AUTHENTICATE = "/authenticate";
     private final String REFRESH_TOKEN = "/refreshToken";
@@ -40,7 +45,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
+                    request.requestMatchers(ADMIN_PATHS).hasRole("ADMIN")
+                            .requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
                             .requestMatchers(SWAGGER_PATHS).permitAll()
                             .anyRequest().permitAll();
                 })

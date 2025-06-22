@@ -4,7 +4,6 @@ import com.enesderin.portfolio.controller.IAboutController;
 import com.enesderin.portfolio.dto.AboutRequest;
 import com.enesderin.portfolio.dto.AboutResponse;
 import com.enesderin.portfolio.service.IAboutService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ public class AboutControllerImpl implements IAboutController {
     @Autowired
     private IAboutService aboutService;
 
-    @PostMapping("/")
+    @PostMapping("/admin")
     @Override
     public ResponseEntity<AboutResponse> createAbout(@ModelAttribute AboutRequest aboutRequest) {
         try{
@@ -28,7 +27,7 @@ public class AboutControllerImpl implements IAboutController {
         return null;
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/admin/{id}")
     @Override
     public ResponseEntity<AboutResponse> updateAbout(@PathVariable int id,@ModelAttribute AboutRequest aboutRequest) {
             AboutResponse about = aboutService.updateAbout(id, aboutRequest);
