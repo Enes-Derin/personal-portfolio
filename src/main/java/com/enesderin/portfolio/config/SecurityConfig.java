@@ -4,6 +4,7 @@ import com.enesderin.portfolio.jwt.AuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,7 +46,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers(ADMIN_PATHS).hasRole("ADMIN")
+                    request
+                            .requestMatchers(ADMIN_PATHS).hasRole("ADMIN")
                             .requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
                             .requestMatchers(SWAGGER_PATHS).permitAll()
                             .anyRequest().permitAll();

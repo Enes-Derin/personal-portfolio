@@ -4,6 +4,9 @@ import com.enesderin.portfolio.controller.IProjectController;
 import com.enesderin.portfolio.dto.ProjectRequest;
 import com.enesderin.portfolio.dto.ProjectResponse;
 import com.enesderin.portfolio.service.IProjectService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/project")
 public class ProjectControllerImpl implements IProjectController {
+
+
 
     @Autowired
     private IProjectService projectService;
@@ -35,6 +40,15 @@ public class ProjectControllerImpl implements IProjectController {
     }
 
     @PostMapping("/admin")
+    @Operation(
+            summary = "Yeni proje oluştur",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "multipart/form-data",
+                            schema = @Schema(implementation = ProjectRequest.class)
+                    )
+            )
+    )
     @Override
     public ResponseEntity<ProjectResponse> createProject(@ModelAttribute ProjectRequest projectRequest) {
         try {

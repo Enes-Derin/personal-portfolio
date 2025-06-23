@@ -30,8 +30,8 @@
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList()));
             return Jwts.builder()
-                    .setSubject(userDetails.getUsername())
                     .setClaims(claims)
+                    .setSubject(userDetails.getUsername())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(new Date().getTime() + 1000 * 60 * 60 * 24))
                     .signWith(getKey(), SignatureAlgorithm.HS256)
@@ -57,8 +57,9 @@
         }
 
         public Boolean validateToken(String token, UserDetails userDetails) {
-            Date expiredDate = exportToken(token, Claims::getExpiration);
-            return expiredDate.after(new Date());
+            final String username = getUsernameToken(token);
+            final Date expiration = exportToken(token, Claims::getExpiration);
+            return (username.equals(userDetails.getUsername()) && expiration.after(new Date()));
         }
 
         public Key getKey() {
