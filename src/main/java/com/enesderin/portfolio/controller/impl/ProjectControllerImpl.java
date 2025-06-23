@@ -34,7 +34,7 @@ public class ProjectControllerImpl implements IProjectController {
 
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<ProjectResponse> getProjectById(Long id) {
+    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
         ProjectResponse projectResponse = this.projectService.getProjectById(id);
         return ResponseEntity.ok(projectResponse);
     }
@@ -74,7 +74,7 @@ public class ProjectControllerImpl implements IProjectController {
 
     @DeleteMapping("/admin/delete/{id}")
     @Override
-    public ResponseEntity<String> deleteProject(Long id) {
+    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
         this.projectService.deleteProject(id);
         return ResponseEntity.ok().body("Project deleted successfully");
     }

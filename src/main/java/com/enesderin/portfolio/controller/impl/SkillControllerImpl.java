@@ -4,7 +4,7 @@ import com.enesderin.portfolio.controller.ISkillController;
 import com.enesderin.portfolio.dto.SkillRequest;
 import com.enesderin.portfolio.dto.SkillResponse;
 import com.enesderin.portfolio.service.ISkillService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/skill")
+@AllArgsConstructor
 public class SkillControllerImpl implements ISkillController {
 
-    @Autowired
     private ISkillService skillService;
 
     @GetMapping
@@ -26,13 +26,13 @@ public class SkillControllerImpl implements ISkillController {
 
     @PostMapping("/admin")
     @Override
-    public ResponseEntity<SkillResponse> createSkill(SkillRequest skillRequest) {
+    public ResponseEntity<SkillResponse> createSkill(@RequestBody SkillRequest skillRequest) {
         return ResponseEntity.ok(skillService.createSkill(skillRequest));
     }
 
-    @DeleteMapping("/admin")
+    @DeleteMapping("/admin/{id}")
     @Override
-    public ResponseEntity<String> deleteSkill(Long id) {
+    public ResponseEntity<String> deleteSkill(@PathVariable Long id) {
         return ResponseEntity.ok("Delete skill with id " + id);
     }
 }

@@ -28,9 +28,9 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     public List<ProjectResponse> getAllProjects() {
-        this.projectRepository.findAll();
+        List<Project> projectList= this.projectRepository.findAll();
         List<ProjectResponse> projectResponses = new ArrayList<>();
-        for (Project project : this.projectRepository.findAll()) {
+        for (Project project : projectList) {
             ProjectResponse projectResponse = new ProjectResponse();
             BeanUtils.copyProperties(project, projectResponse);
             projectResponses.add(projectResponse);
@@ -53,7 +53,7 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     public ProjectResponse createProject(ProjectRequest projectRequest) {
         String fileName= UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
-        Path filePath= Paths.get(uploadDir + fileName);
+        Path filePath= Paths.get(uploadDir , fileName);
         try{
             Files.createDirectories(filePath.getParent());
             Files.write(filePath,projectRequest.getImageUrl().getBytes());
@@ -79,7 +79,7 @@ public class ProjectServiceImpl implements IProjectService {
             BeanUtils.copyProperties(projectRequest, project);
             if (projectRequest.getImageUrl() != null && !projectRequest.getImageUrl().isEmpty()) {
                 String fileName= UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
-                Path filePath = Paths.get(uploadDir + fileName);
+                Path filePath = Paths.get(uploadDir , fileName);
                 try{
                     Files.createDirectories(filePath.getParent());
                     Files.write(filePath,projectRequest.getImageUrl().getBytes());

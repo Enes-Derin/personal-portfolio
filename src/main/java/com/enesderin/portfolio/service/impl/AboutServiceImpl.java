@@ -42,11 +42,12 @@ public class AboutServiceImpl implements IAboutService {
 
     @Override
     public AboutResponse getAbout() {
-        List<About> about = this.aboutRepository.findAll();
-        for (About aboutItem : about) {
-            AboutResponse aboutResponse = new AboutResponse();
-            BeanUtils.copyProperties(aboutItem, aboutResponse);
-            return aboutResponse;
+        Optional<About> about = this.aboutRepository.findAll().stream().findFirst();
+        if (about.isPresent()) {
+                AboutResponse aboutResponse = new AboutResponse();
+                BeanUtils.copyProperties(about, aboutResponse);
+                return aboutResponse;
+
         }
         return null;
     }

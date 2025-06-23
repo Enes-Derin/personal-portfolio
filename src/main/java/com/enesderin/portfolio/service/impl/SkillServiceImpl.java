@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SkillServiceImpl implements ISkillService {
@@ -45,6 +46,11 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     public void deleteSkill(Long id) {
-        this.skillRepository.deleteById(id);
+        Optional<Skill> optional = this.skillRepository.findById(id);
+        if (optional.isPresent()) {
+            Skill skill = optional.get();
+            this.skillRepository.delete(skill);
+        }
+
     }
 }
