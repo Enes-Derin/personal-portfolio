@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,15 +42,15 @@ public class AboutServiceImpl implements IAboutService {
     }
 
     @Override
-    public AboutResponse getAbout() {
-        Optional<About> about = this.aboutRepository.findAll().stream().findFirst();
-        if (about.isPresent()) {
-                AboutResponse aboutResponse = new AboutResponse();
-                BeanUtils.copyProperties(about, aboutResponse);
-                return aboutResponse;
-
+    public List<AboutResponse> getAbout() {
+        List<About> aboutList = this.aboutRepository.findAll();
+        List<AboutResponse> aboutResponses = new ArrayList<>();
+        for (About about : aboutList) {
+            AboutResponse aboutResponse = new AboutResponse();
+            BeanUtils.copyProperties(about,aboutResponse);
+            aboutResponses.add(aboutResponse);
         }
-        return null;
+        return aboutResponses;
     }
 
     @Override

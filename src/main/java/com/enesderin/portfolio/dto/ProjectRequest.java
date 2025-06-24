@@ -1,5 +1,6 @@
 package com.enesderin.portfolio.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectRequest {
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String description;
+    @NotEmpty
     private MultipartFile imageUrl;
+    @NotEmpty
     private String githubUrl;
 }

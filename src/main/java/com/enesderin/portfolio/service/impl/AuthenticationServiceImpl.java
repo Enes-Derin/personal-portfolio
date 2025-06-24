@@ -1,5 +1,8 @@
 package com.enesderin.portfolio.service.impl;
 
+import com.enesderin.portfolio.exception.BaseException;
+import com.enesderin.portfolio.exception.ErrorMessage;
+import com.enesderin.portfolio.exception.MessageType;
 import com.enesderin.portfolio.jwt.jwtDto.AuthRequest;
 import com.enesderin.portfolio.jwt.jwtDto.AuthResponse;
 import com.enesderin.portfolio.jwt.jwtDto.DtoUser;
@@ -77,9 +80,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             return new AuthResponse(accessToken, savedRefreshToken.getRefreshToken());
 
         }catch (Exception e) {
-            e.printStackTrace();
+            throw new BaseException(new ErrorMessage(MessageType.USERNAMEORPASSWORDINVALİD, authRequest.getUsername()+" , "+authRequest.getPassword()));
         }
-        return null;
     }
 
     public boolean isValidRefreshToken(Date expiredDate) {

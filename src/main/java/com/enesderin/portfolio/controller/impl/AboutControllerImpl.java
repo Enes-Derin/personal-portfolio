@@ -3,18 +3,23 @@ package com.enesderin.portfolio.controller.impl;
 import com.enesderin.portfolio.controller.IAboutController;
 import com.enesderin.portfolio.dto.AboutRequest;
 import com.enesderin.portfolio.dto.AboutResponse;
+import com.enesderin.portfolio.exception.BaseException;
+import com.enesderin.portfolio.exception.ErrorMessage;
+import com.enesderin.portfolio.exception.MessageType;
+import com.enesderin.portfolio.model.RootEntity;
 import com.enesderin.portfolio.service.IAboutService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/about")
-public class AboutControllerImpl implements IAboutController {
+public class AboutControllerImpl extends RestBaseController implements IAboutController {
 
     @Autowired
     private IAboutService aboutService;
@@ -30,28 +35,26 @@ public class AboutControllerImpl implements IAboutController {
 
     )
     @Override
-    public ResponseEntity<AboutResponse> createAbout(@ModelAttribute AboutRequest aboutRequest) {
+    public RootEntity<AboutResponse> createAbout(@ModelAttribute @Valid AboutRequest aboutRequest) {
         try{
             AboutResponse about = aboutService.createAbout(aboutRequest);
-            return ResponseEntity.ok(about);
+            return ok(about);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new BaseException(new ErrorMessage(MessageType.GENERAL_EXCEPTİON,null));
         }
-        return null;
     }
 
     @PutMapping("/admin/{id}")
     @Override
-    public ResponseEntity<AboutResponse> updateAbout(@PathVariable int id,@ModelAttribute AboutRequest aboutRequest) {
+    public RootEntity<AboutResponse> updateAbout(@PathVariable int id,@ModelAttribute @Valid AboutRequest aboutRequest) {
             AboutResponse about = aboutService.updateAbout(id, aboutRequest);
-            return ResponseEntity.ok(about);
+            return ok(about);
 
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Override
-    public ResponseEntity<AboutResponse> getAbout() {
-        AboutResponse aboutResponse = this.aboutService.getAbout();
-        return ResponseEntity.ok(aboutResponse);
+    public RootEntity<List<AboutResponse>> getAbout() {
+        return ok(this.aboutService.getAbout());
     }
 }

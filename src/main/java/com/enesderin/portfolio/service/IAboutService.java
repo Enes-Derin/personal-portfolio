@@ -5,9 +5,10 @@ import com.enesderin.portfolio.dto.AboutResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface IAboutService {
     AboutResponse createAbout(AboutRequest aboutRequest) throws IOException;
-    AboutResponse getAbout();
+    List<AboutResponse> getAbout();
     AboutResponse updateAbout(int id, AboutRequest aboutRequest);
 }

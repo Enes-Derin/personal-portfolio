@@ -1,5 +1,8 @@
 package com.enesderin.portfolio.jwt;
 
+import com.enesderin.portfolio.exception.BaseException;
+import com.enesderin.portfolio.exception.ErrorMessage;
+import com.enesderin.portfolio.exception.MessageType;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -31,30 +34,24 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
-        System.out.println("Gelen header: " + header);
 
         if (header == null || !header.startsWith("Bearer ")) {
-            System.out.println("Token bulunamadı veya Bearer ile başlamıyor");
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = header.substring(7);
         String username = jwtService.getUsernameToken(token);
-        System.out.println("Çözümlenen kullanıcı adı: " + username);
 
         try {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 boolean valid = jwtService.validateToken(token, userDetails);
-                System.out.println("Token geçerli mi? " + valid);
                 if (userDetails != null && valid) {
-                    System.out.println("Yetkiler: " + userDetails.getAuthorities());
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities()
                     );
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    System.out.println("AuthenticationFilter çalışıyor");
                 }
             }
         } catch (ExpiredJwtException e) {

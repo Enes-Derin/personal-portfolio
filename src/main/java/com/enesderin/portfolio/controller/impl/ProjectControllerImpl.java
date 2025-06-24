@@ -3,10 +3,15 @@ package com.enesderin.portfolio.controller.impl;
 import com.enesderin.portfolio.controller.IProjectController;
 import com.enesderin.portfolio.dto.ProjectRequest;
 import com.enesderin.portfolio.dto.ProjectResponse;
+import com.enesderin.portfolio.exception.BaseException;
+import com.enesderin.portfolio.exception.ErrorMessage;
+import com.enesderin.portfolio.exception.MessageType;
+import com.enesderin.portfolio.model.RootEntity;
 import com.enesderin.portfolio.service.IProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/project")
-public class ProjectControllerImpl implements IProjectController {
+public class ProjectControllerImpl extends RestBaseController implements IProjectController {
 
 
 
@@ -27,16 +32,16 @@ public class ProjectControllerImpl implements IProjectController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<ProjectResponse>> getAllProjects() {
+    public RootEntity<List<ProjectResponse>> getAllProjects() {
         List<ProjectResponse> projectResponses = this.projectService.getAllProjects();
-        return ResponseEntity.ok(projectResponses);
+        return ok(projectResponses);
     }
 
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
+    public RootEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
         ProjectResponse projectResponse = this.projectService.getProjectById(id);
-        return ResponseEntity.ok(projectResponse);
+        return ok(projectResponse);
     }
 
     @PostMapping("/admin")
@@ -50,32 +55,30 @@ public class ProjectControllerImpl implements IProjectController {
             )
     )
     @Override
-    public ResponseEntity<ProjectResponse> createProject(@ModelAttribute ProjectRequest projectRequest) {
+    public RootEntity<ProjectResponse> createProject(@ModelAttribute @Valid ProjectRequest projectRequest) {
         try {
             ProjectResponse projectResponse = projectService.createProject(projectRequest);
-            return ResponseEntity.ok(projectResponse);
+            return ok(projectResponse);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.GENERAL_EXCEPTİON,null));
         }
     }
 
     @PutMapping("/admin/{id}")
     @Override
-    public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id,@ModelAttribute ProjectRequest projectRequest) {
+    public RootEntity<ProjectResponse> updateProject(@PathVariable Long id,@ModelAttribute @Valid ProjectRequest projectRequest) {
         try{
             ProjectResponse projectResponse = projectService.updateProject(id, projectRequest);
-            return ResponseEntity.ok(projectResponse);
+            return ok(projectResponse);
         }catch (Exception e){
-            e.printStackTrace();
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.GENERAL_EXCEPTİON,null));
         }
     }
 
     @DeleteMapping("/admin/delete/{id}")
     @Override
-    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
+    public RootEntity<String> deleteProject(@PathVariable Long id) {
         this.projectService.deleteProject(id);
-        return ResponseEntity.ok().body("Project deleted successfully");
+        return ok("Project deleted successfully");
     }
 }

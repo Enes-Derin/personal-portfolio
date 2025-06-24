@@ -5,6 +5,7 @@ import com.enesderin.portfolio.jwt.jwtDto.AuthRequest;
 import com.enesderin.portfolio.jwt.jwtDto.AuthResponse;
 import com.enesderin.portfolio.jwt.jwtDto.DtoUser;
 import com.enesderin.portfolio.jwt.jwtDto.RefreshTokenRequest;
+import com.enesderin.portfolio.model.RootEntity;
 import com.enesderin.portfolio.service.IAuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +15,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RestAuthControllerImpl implements IRestAuthController {
+public class RestAuthControllerImpl extends RestBaseController implements IRestAuthController {
 
     @Autowired
     private IAuthenticationService authenticationService;
 
     @PostMapping("/register")
     @Override
-    public ResponseEntity<DtoUser> register(@RequestBody @Valid AuthRequest authRequest) {
-        return ResponseEntity.ok(this.authenticationService.register(authRequest));
+    public RootEntity<DtoUser> register(@RequestBody @Valid AuthRequest authRequest) {
+        return ok(this.authenticationService.register(authRequest));
     }
 
     @PostMapping("/authenticate")
     @Override
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthRequest authRequest) {
+    public RootEntity<AuthResponse> authenticate(@RequestBody @Valid AuthRequest authRequest) {
         AuthResponse authResponse = this.authenticationService.authenticate(authRequest);
-        return ResponseEntity.ok(authResponse);
+        return ok(authResponse);
     }
 
     @PostMapping("/refreshToken")
     @Override
-    public ResponseEntity<AuthResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
-        return ResponseEntity.ok(this.authenticationService.refreshToken(refreshTokenRequest));
+    public RootEntity<AuthResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
+        return ok(this.authenticationService.refreshToken(refreshTokenRequest));
     }
 }

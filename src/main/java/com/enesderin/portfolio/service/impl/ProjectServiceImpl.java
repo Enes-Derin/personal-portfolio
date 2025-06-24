@@ -2,6 +2,9 @@ package com.enesderin.portfolio.service.impl;
 
 import com.enesderin.portfolio.dto.ProjectRequest;
 import com.enesderin.portfolio.dto.ProjectResponse;
+import com.enesderin.portfolio.exception.BaseException;
+import com.enesderin.portfolio.exception.ErrorMessage;
+import com.enesderin.portfolio.exception.MessageType;
 import com.enesderin.portfolio.model.Project;
 import com.enesderin.portfolio.repository.ProjectRepository;
 import com.enesderin.portfolio.service.IProjectService;
@@ -47,7 +50,7 @@ public class ProjectServiceImpl implements IProjectService {
             return projectResponse;
         }
         // Exception
-        return null;
+        throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST,id.toString()));
     }
 
     @Override
@@ -102,6 +105,8 @@ public class ProjectServiceImpl implements IProjectService {
         Optional<Project> optional = this.projectRepository.findById(id);
         if (optional.isPresent()) {
             this.projectRepository.delete(optional.get());
+        }else{
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST,id.toString()));
         }
     }
 }

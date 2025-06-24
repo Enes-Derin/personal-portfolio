@@ -3,7 +3,9 @@ package com.enesderin.portfolio.controller.impl;
 import com.enesderin.portfolio.controller.ISkillController;
 import com.enesderin.portfolio.dto.SkillRequest;
 import com.enesderin.portfolio.dto.SkillResponse;
+import com.enesderin.portfolio.model.RootEntity;
 import com.enesderin.portfolio.service.ISkillService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,25 +16,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/skill")
 @AllArgsConstructor
-public class SkillControllerImpl implements ISkillController {
+public class SkillControllerImpl extends RestBaseController implements ISkillController {
 
     private ISkillService skillService;
 
     @GetMapping
     @Override
-    public ResponseEntity<List<SkillResponse>> getSkills() {
-        return ResponseEntity.ok(skillService.getSkills());
+    public RootEntity<List<SkillResponse>> getSkills() {
+        return ok(skillService.getSkills());
     }
 
     @PostMapping("/admin")
     @Override
-    public ResponseEntity<SkillResponse> createSkill(@RequestBody SkillRequest skillRequest) {
-        return ResponseEntity.ok(skillService.createSkill(skillRequest));
+    public RootEntity<SkillResponse> createSkill(@RequestBody @Valid SkillRequest skillRequest) {
+        return ok(skillService.createSkill(skillRequest));
     }
 
     @DeleteMapping("/admin/{id}")
     @Override
-    public ResponseEntity<String> deleteSkill(@PathVariable Long id) {
-        return ResponseEntity.ok("Delete skill with id " + id);
+    public RootEntity<String> deleteSkill(@PathVariable Long id) {
+        return ok("Delete skill with id " + id);
     }
 }
