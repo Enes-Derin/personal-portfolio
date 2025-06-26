@@ -11,15 +11,11 @@ import com.enesderin.portfolio.service.IProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,86 +23,90 @@ public class ProjectServiceImpl implements IProjectService {
 
     private final ProjectRepository projectRepository;
 
-    private String uploadDir= "uploads/";
+    // Kaydetme klasörü
+    private final String uploadDir = "src/main/resources/static/img";
 
     @Override
     public List<ProjectResponse> getAllProjects() {
-        List<Project> projectList= this.projectRepository.findAll();
+        List<Project> projectList = projectRepository.findAll();
         List<ProjectResponse> projectResponses = new ArrayList<>();
+
         for (Project project : projectList) {
-            ProjectResponse projectResponse = new ProjectResponse();
-            BeanUtils.copyProperties(project, projectResponse);
-            projectResponses.add(projectResponse);
+            ProjectResponse response = new ProjectResponse();
+            BeanUtils.copyProperties(project, response);
+            projectResponses.add(response);
         }
+
         return projectResponses;
     }
 
     @Override
     public ProjectResponse getProjectById(Long id) {
-        Optional<Project> optional = this.projectRepository.findById(id);
-        if (optional.isPresent()) {
-            ProjectResponse projectResponse = new ProjectResponse();
-            BeanUtils.copyProperties(optional.get(), projectResponse);
-            return projectResponse;
-        }
-        // Exception
-        throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST,id.toString()));
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST, id.toString())));
+
+        ProjectResponse response = new ProjectResponse();
+        BeanUtils.copyProperties(project, response);
+        return response;
     }
 
     @Override
     public ProjectResponse createProject(ProjectRequest projectRequest) {
-        String fileName= UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
-        Path filePath= Paths.get(uploadDir , fileName);
-        try{
-            Files.createDirectories(filePath.getParent());
-            Files.write(filePath,projectRequest.getImageUrl().getBytes());
+        try {
+            String fileName = UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
+            Path uploadPath = Paths.get("src/main/resources/static/img");
+            Files.createDirectories(uploadPath);
+            Path filePath = uploadPath.resolve(fileName);
+            Files.write(filePath, projectRequest.getImageUrl().getBytes());
+
             Project project = new Project();
             BeanUtils.copyProperties(projectRequest, project);
-            project.setImageUrl("/"+uploadDir+fileName);
+            project.setImageUrl("/img/" + fileName); // 🔥 Doğru public yol
+
             projectRepository.save(project);
+
             ProjectResponse projectResponse = new ProjectResponse();
             BeanUtils.copyProperties(project, projectResponse);
             return projectResponse;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
     public ProjectResponse updateProject(Long id, ProjectRequest projectRequest) {
-        Optional<Project> optional = this.projectRepository.findById(id);
-        if (optional.isPresent()) {
-            Project project = optional.get();
-            BeanUtils.copyProperties(projectRequest, project);
-            if (projectRequest.getImageUrl() != null && !projectRequest.getImageUrl().isEmpty()) {
-                String fileName= UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
-                Path filePath = Paths.get(uploadDir , fileName);
-                try{
-                    Files.createDirectories(filePath.getParent());
-                    Files.write(filePath,projectRequest.getImageUrl().getBytes());
-                    project.setImageUrl("/"+uploadDir+fileName);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-            projectRepository.save(project);
-            ProjectResponse projectResponse = new ProjectResponse();
-            BeanUtils.copyProperties(project, projectResponse);
-            return projectResponse;
+        Optional<Project> optional = projectRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST, id.toString()));
         }
-        return null;
+
+        Project project = optional.get();
+        BeanUtils.copyProperties(projectRequest, project, "id", "imageUrl"); // imageUrl ayrı işlenecek
+
+        if (projectRequest.getImageUrl() != null && !projectRequest.getImageUrl().isEmpty()) {
+            try {
+                String fileName = UUID.randomUUID() + "_" + projectRequest.getImageUrl().getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, projectRequest.getImageUrl().getBytes());
+                project.setImageUrl("/img/" + fileName);
+            } catch (IOException e) {
+                throw new BaseException(new ErrorMessage(MessageType.GENERAL_EXCEPTİON, "Görsel güncelleme hatası"));
+            }
+        }
+
+        projectRepository.save(project);
+
+        ProjectResponse response = new ProjectResponse();
+        BeanUtils.copyProperties(project, response);
+        return response;
     }
 
     @Override
     public void deleteProject(Long id) {
-        Optional<Project> optional = this.projectRepository.findById(id);
-        if (optional.isPresent()) {
-            this.projectRepository.delete(optional.get());
-        }else{
-            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST,id.toString()));
-        }
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXİST, id.toString())));
+        projectRepository.delete(project);
     }
 }

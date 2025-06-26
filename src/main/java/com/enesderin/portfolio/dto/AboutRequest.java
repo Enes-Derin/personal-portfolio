@@ -1,6 +1,7 @@
 package com.enesderin.portfolio.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,6 @@ public class AboutRequest {
     private String description;
     @NotEmpty
     private String cvUrl;
-    @NotEmpty
+    @NotNull
     private MultipartFile imageUrl;
 }

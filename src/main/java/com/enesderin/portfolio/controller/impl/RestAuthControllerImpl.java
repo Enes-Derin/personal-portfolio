@@ -9,7 +9,6 @@ import com.enesderin.portfolio.model.RootEntity;
 import com.enesderin.portfolio.service.IAuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +19,11 @@ public class RestAuthControllerImpl extends RestBaseController implements IRestA
     @Autowired
     private IAuthenticationService authenticationService;
 
-    @PostMapping("/register")
+    /*@PostMapping("/register")
     @Override
     public RootEntity<DtoUser> register(@RequestBody @Valid AuthRequest authRequest) {
         return ok(this.authenticationService.register(authRequest));
-    }
+    }*/
 
     @PostMapping("/authenticate")
     @Override

@@ -35,6 +35,7 @@ public class SkillControllerImpl extends RestBaseController implements ISkillCon
     @DeleteMapping("/admin/{id}")
     @Override
     public RootEntity<String> deleteSkill(@PathVariable Long id) {
+        this.skillService.deleteSkill(id);
         return ok("Delete skill with id " + id);
     }
 }

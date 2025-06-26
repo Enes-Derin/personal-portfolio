@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AboutResponse {
+    private int id;
     private String description;
     private String cvUrl;
     private String imageUrl;

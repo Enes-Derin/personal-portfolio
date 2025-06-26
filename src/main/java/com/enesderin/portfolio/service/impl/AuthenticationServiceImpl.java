@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
 
-    @Override
+  /*  @Override
     public DtoUser register(AuthRequest authRequest) {
         User user = new User();
         user.setUsername(authRequest.getUsername());
@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         DtoUser dtoUser = new DtoUser();
         BeanUtils.copyProperties(user, dtoUser);
         return dtoUser;
-    }
+    }*/
 
     @Override
     public AuthResponse authenticate(AuthRequest authRequest) {
@@ -80,7 +80,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             return new AuthResponse(accessToken, savedRefreshToken.getRefreshToken());
 
         }catch (Exception e) {
-            throw new BaseException(new ErrorMessage(MessageType.USERNAMEORPASSWORDINVALİD, authRequest.getUsername()+" , "+authRequest.getPassword()));
+            throw new BaseException(new ErrorMessage(MessageType.USERNAMEORPASSWORDINVALID,null));
         }
     }
 

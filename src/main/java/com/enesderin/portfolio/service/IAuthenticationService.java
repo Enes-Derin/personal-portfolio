@@ -7,7 +7,7 @@ import com.enesderin.portfolio.jwt.jwtDto.RefreshTokenRequest;
 
 public interface IAuthenticationService  {
 
-    DtoUser register(AuthRequest authRequest);
+    //DtoUser register(AuthRequest authRequest);
     AuthResponse authenticate(AuthRequest authRequest);
     AuthResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
 }

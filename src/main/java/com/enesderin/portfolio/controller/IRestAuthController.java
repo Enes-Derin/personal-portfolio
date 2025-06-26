@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface IRestAuthController {
 
-    RootEntity<DtoUser> register(AuthRequest authRequest);
+    //RootEntity<DtoUser> register(AuthRequest authRequest);
     RootEntity<AuthResponse> authenticate(AuthRequest authRequest);
     RootEntity<AuthResponse> refreshToken(RefreshTokenRequest refreshTokenRequest);
 }

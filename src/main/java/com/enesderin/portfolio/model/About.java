@@ -15,6 +15,7 @@ public class About {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Lob
     private String description;
     private String cvUrl;
     private String imageUrl;

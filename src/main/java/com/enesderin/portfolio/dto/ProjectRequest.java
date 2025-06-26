@@ -1,6 +1,7 @@
 package com.enesderin.portfolio.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class ProjectRequest {
     private String title;
     @NotEmpty
     private String description;
-    @NotEmpty
+    @NotNull
     private MultipartFile imageUrl;
     @NotEmpty
     private String githubUrl;
