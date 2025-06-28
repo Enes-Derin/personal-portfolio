@@ -1,13 +1,14 @@
-# 1. Maven ile derle
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Temel Java image
+FROM openjdk:17-jdk-alpine
 
-# 2. Derlenmiş JAR ile yeni image oluştur
-FROM openjdk:17
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
 
+# Uygulama JAR dosyasını ekle
+COPY target/portfolio-0.0.1-SNAPSHOT.jar app.jar
+
+# Portu tanımla (Spring Boot default: 8080)
 EXPOSE 8080
+
+# Uygulama çalıştır
 ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
