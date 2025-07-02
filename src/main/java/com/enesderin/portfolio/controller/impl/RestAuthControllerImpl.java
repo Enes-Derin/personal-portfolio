@@ -19,11 +19,11 @@ public class RestAuthControllerImpl extends RestBaseController implements IRestA
     @Autowired
     private IAuthenticationService authenticationService;
 
-    /*@PostMapping("/register")
+    @PostMapping("/register")
     @Override
     public RootEntity<DtoUser> register(@RequestBody @Valid AuthRequest authRequest) {
         return ok(this.authenticationService.register(authRequest));
-    }*/
+    }
 
     @PostMapping("/authenticate")
     @Override

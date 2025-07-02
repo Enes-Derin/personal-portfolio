@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
 
-  /*  @Override
+   @Override
     public DtoUser register(AuthRequest authRequest) {
         User user = new User();
         user.setUsername(authRequest.getUsername());
@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         DtoUser dtoUser = new DtoUser();
         BeanUtils.copyProperties(user, dtoUser);
         return dtoUser;
-    }*/
+    }
 
     @Override
     public AuthResponse authenticate(AuthRequest authRequest) {
