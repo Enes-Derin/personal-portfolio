@@ -24,7 +24,7 @@ function clearForm() {
 }
 
 function loadAboutList() {
-  fetch("http://localhost:8080/about", {
+  fetch("https://personal-portfolio-z8w0.onrender.com/about", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -46,7 +46,7 @@ function loadAboutList() {
 
           let html = "<ul class='list-group'>";
           abouts.forEach(item => {
-            const baseImageUrl = "http://localhost:8080";
+            const baseImageUrl = "https://personal-portfolio-z8w0.onrender.com";
             html += `<li class="list-group-item list-group-item-dark" style="cursor:pointer" data-id="${item.id}">
                     <strong>Açıklama:</strong> ${item.description}<br/>
                     <strong>CV:</strong> <a href="${item.cvUrl}" target="_blank">Görüntüle</a><br/>
@@ -93,8 +93,8 @@ aboutForm.addEventListener("submit", function (e) {
   const isUpdate = id !== "";
 
   const url = isUpdate
-      ? `http://localhost:8080/about/admin/${id}`
-      : "http://localhost:8080/about/admin";
+      ? `https://personal-portfolio-z8w0.onrender.com/about/admin/${id}`
+      : "https://personal-portfolio-z8w0.onrender.com/about/admin";
 
   const method = isUpdate ? "PUT" : "POST";
 

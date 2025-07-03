@@ -9,7 +9,7 @@ const githubUrlInput = document.getElementById("githubUrl");
 const imageUrlInput = document.getElementById("imageUrl");
 
 const token = localStorage.getItem("accessToken");
-const baseImageUrl = "http://localhost:8080"; // Temel API adresini burada tut
+const baseImageUrl = "https://personal-portfolio-z8w0.onrender.com"; // Temel API adresini burada tut
 
 function showMessage(text, isError = false) {
     messageDiv.textContent = text;
