@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
@@ -57,54 +57,7 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            document.getElementById("usernameError").textContent = "";
-            document.getElementById("passwordError").textContent = "";
-            document.getElementById("generalError").textContent = "";
-
-            const username = document.getElementById("inputUsername").value.trim();
-            const password = document.getElementById("inputPassword3").value;
-
-            try {
-                const response = await fetch("/authenticate", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ username, password })
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    localStorage.setItem("accessToken", result.data.accessToken);
-                    localStorage.setItem("refreshToken", result.data.refreshToken);
-                    window.location.href = "/admin-panel.html";
-                } else {
-                    const errors = result?.exception?.message;
-
-                    // 400 ise: validation hataları varsa input altına yaz
-                    if (response.status === 400 && typeof errors === "object") {
-                        if (errors.username) {
-                            document.getElementById("usernameError").textContent = errors.username[0];
-                        }
-                        if (errors.password) {
-                            document.getElementById("passwordError").textContent = errors.password[0];
-                        }
-                    } else {
-                        // Diğer durumlar: (örnek: şifre yanlış, kullanıcı yok vs.)
-                        const genelMesaj = typeof errors === "string" ? errors : "Giriş başarısız.";
-                        document.getElementById("generalError").textContent = genelMesaj;
-                    }
-                }
-            } catch (error) {
-                document.getElementById("generalError").textContent = "Sunucuya bağlanırken hata oluştu: " + error.message;
-            }
-        });
-    </script>
+    <script src="./js/login.js"></script>
 
 </body>
 
