@@ -69,7 +69,7 @@
             const password = document.getElementById("inputPassword3").value;
 
             try {
-                const response = await fetch("https://personal-portfolio-z8w0.onrender.com/authenticate", {
+                const response = await fetch("/authenticate", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

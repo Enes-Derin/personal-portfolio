@@ -24,7 +24,7 @@ function clearForm() {
 }
 
 function loadAboutList() {
-  fetch("https://personal-portfolio-z8w0.onrender.com/about", {
+  fetch("/about", {
     headers: {
       Authorization: `Bearer ${token}`
     }
