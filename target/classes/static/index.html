@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enes Derin Portfolyo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #bfc9da;
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Card hover zoom */
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg my-5">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars" style="color: #fafafa;"></i>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <div class="navbar-nav text-center">
+                        <ul>
+                            <li class="d-inline mx-3"><a href="#about">Hakkımda</a></li>
+                            <li class="d-inline mx-3"><a href="#projects">Projeler</a></li>
+                            <li class="d-inline mx-3"><a href="#skills">Teknolojiler</a></li>
+                            <li class="d-inline mx-3"><a href="#contact">İletişim</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <header class="row m-3">
+            <div class="col-md-8 col-sm-12 align-self-center">
+                <h1 style="color: #BFC9DA;" class="mb-4 text-center">
+                    Merhaba. Ben <span class="auto-input"></span>
+                </h1>
+            </div>
+            <div class="col-md-4 col-sm-12 align-self-center">
+                <p>
+                    Web siteniz, dijital kimliğinizin ötesinde, uzmanlık alanınızdaki güveni pekiştiren bir araçtır. Her
+                    proje,
+                    tutkularınızın ve yetkinliğinizin bir yansımasıdır. Hayata bakış açınızı burada paylaşıyor ve
+                    yazılımdan
+                    daha fazlasını yapıyoruz. Beni keşfedin ve birlikte harika işler ortaya çıkaralım!
+                </p>
+            </div>
+        </header>
+    </div>
+
+    <!-- About Bölümü -->
+    <article class="container">
+        <div class="row my-5 justify-content-center">
+            <h2 style="color: #BFC9DA;" class="fw-bolder my-5 text-center" id="about">
+                Hakkımda
+                <span id="underline" class="mx-auto mt-4"></span>
+            </h2>
+
+            <div class="col-sm-12 col-md-4 mb-5 d-flex justify-content-center">
+                <a id="cvLink" href="#" target="_blank" rel="noopener noreferrer">
+                    <img id="cvImage" src="" class="img-fluid rounded-start" style="width: 18rem;"
+                         alt="CV resmi" />
+                </a>
+            </div>
+
+            <div class="col-sm-12 col-md-8">
+                <p id="aboutDescription">Yükleniyor...</p>
+                <div class="col-12 d-flex justify-content-center social-url my-5">
+                    <a href="#" class="mx-4">
+                        <i class="fa-brands fa-linkedin fa-lg" style="color: #ffffff;"></i> LinkedIn
+                    </a>
+                    <a href="#" class="mx-4">
+                        <i class="fa-brands fa-github fa-lg" style="color: #ffffff;"></i> Github
+                    </a>
+                    <a href="mailto:enesenesder99@gmail.com" class="mx-4">
+                        <i class="fa-solid fa-square-envelope fa-lg" style="color: #ffffff;"></i> Mail
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Projects Bölümü -->
+    <article class="container my-5">
+        <h2 style="color: #BFC9DA;" class="fw-bolder my-5 text-center" id="projects">
+            Bazı Öne Çıkanlar
+            <span id="underline" class="mx-auto mt-4"></span>
+        </h2>
+        <div id="projectList" class="row row-cols-1 row-cols-md-3 g-4">
+            <p class="text-center" style="color:#ccc;">Projeler yükleniyor...</p>
+        </div>
+    </article>
+
+    <!-- Skills Bölümü -->
+    <article class="container skills mt-5">
+        <h2 style="color: #BFC9DA;" class="fw-bolder my-5 py-5 text-center" id="skills">
+            Teknolojiler
+            <span id="underline" class="mx-auto mt-4"></span>
+        </h2>
+        <div id="skillsList" class="row justify-content-center text-center">
+            <p style="color:#ccc;">Teknolojiler yükleniyor...</p>
+        </div>
+    </article>
+
+    <!-- Contact Bölümü -->
+    <article id="contact" class="container">
+        <h2 class="text-center mb-4">İletişim</h2>
+        <form action="https://formsubmit.co/enesenesder99&#64;gmail.com" method="POST">
+            <input type="text" name="name" placeholder="Adınız" required />
+            <input type="email" name="email" placeholder="E-mail adresiniz" required />
+            <textarea name="message" rows="6" placeholder="Mesajınız" required></textarea>
+
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://enes-derin.github.io/portfolio/tesekkurler.html" />
+
+            <button type="submit">Gönder</button>
+        </form>
+    </article>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row text-center mt-4">
+                <div class="col-sm-12">
+                    © Copyright 2025 . Made by
+                    <a href="#" style="text-decoration:underline white; color: #fafafa;">Enes Derin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        // Typed.js animasyonu
+        var typed = new Typed(".auto-input", {
+            strings: ["Enes...", "Web Geliştiriciyim", "Web Tasarımcısıyım"],
+            typeSpeed: 100,
+            backSpeed: 100,
+            loop: true,
+        });
+
+        // Backend API base url
+        const API_BASE = "http://localhost:8080";
+
+        // About bilgisi çek
+        async function loadAbout() {
+            try {
+                const res = await fetch(`${API_BASE}/about`);
+                const data = await res.json();
+                if (data.result && data.data.length > 0) {
+                    const about = data.data[0]; // ilk obje alınıyor
+                    document.getElementById("aboutDescription").textContent = about.description || "Açıklama yok.";
+                    document.getElementById("cvLink").href = about.cvUrl || "#";
+                    document.getElementById("cvImage").src = about.imageUrl || "img/Cv.png";
+                } else {
+                    document.getElementById("aboutDescription").textContent = "Hakkımda bilgisi bulunamadı.";
+                }
+            } catch (error) {
+                document.getElementById("aboutDescription").textContent = "Hakkımda bilgisi yüklenirken hata oluştu.";
+                console.error(error);
+            }
+        }
+
+        // Projects bilgisi çek
+        async function loadProjects() {
+            try {
+                const res = await fetch(`${API_BASE}/project`);
+                const data = await res.json();
+                const container = document.getElementById("projectList");
+                container.innerHTML = "";
+                if (data.result && data.data.length > 0) {
+                    data.data.forEach((project) => {
+                        const card = document.createElement("div");
+                        card.className = "col";
+                        card.innerHTML = `
+              <div class="card h-100 text-light mt-3 hover-zoom" style="background-color: #0D1117;">
+                <img src="${project.imageUrl || 'img/Image-not-found.png'}" class="card-img-top mx-auto" style="width: 18rem;" alt="${project.title}" />
+                <div class="card-body">
+                  <h5 class="card-title text-center" style="color: #D4AF37;">${project.title}</h5><br>
+                  <p class="card-text">${project.description}</p>
+                  <div class="text-center">
+                    <a class="github-link" href="${project.githubUrl || '#'}" target="_blank" rel="noopener noreferrer">Kodlara Ulaşabilirsiniz</a>
+                  </div>
+                </div>
+              </div>
+            `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = "<p class='text-center' style='color:#ccc;'>Projeler bulunamadı.</p>";
+                }
+            } catch (error) {
+                const container = document.getElementById("projectList");
+                container.innerHTML = "<p class='text-center' style='color:#f00;'>Projeler yüklenirken hata oluştu.</p>";
+                console.error(error);
+            }
+        }
+
+        // Skills bilgisi çek
+        async function loadSkills() {
+            try {
+                const res = await fetch(`${API_BASE}/skill`);
+                const data = await res.json();
+                const container = document.getElementById("skillsList");
+                container.innerHTML = "";
+                if (data.result && data.data.length > 0) {
+                    data.data.forEach((skill) => {
+                        const col = document.createElement("div");
+                        col.className = "col-lg-2 col-md-4 col-sm-12";
+                        col.innerHTML = `
+          <div class="card text-light mt-3" style="width: 13rem; background-color: #0D1117;">
+            <div class="card-body">
+              <img src="${skill.iconUrl || 'img/default-icon.png'}" alt="${skill.name} icon" style="width: 40px; height: 40px; margin-bottom: 15px;" />
+              <p class="card-text">${skill.name}</p>
+              <p class="card-footer">${skill.category}</p>
+            </div>
+          </div>
+        `;
+                        container.appendChild(col);
+                    });
+                } else {
+                    container.innerHTML = "<p style='color:#ccc;'>Teknolojiler bulunamadı.</p>";
+                }
+            } catch (error) {
+                const container = document.getElementById("skillsList");
+                container.innerHTML = "<p style='color:#f00;'>Teknolojiler yüklenirken hata oluştu.</p>";
+                console.error(error);
+            }
+        }
+
+        // Sayfa yüklendiğinde verileri çek
+        window.addEventListener("DOMContentLoaded", () => {
+            loadAbout();
+            loadProjects();
+            loadSkills();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <script>
+        async function loadSkills() {
+            try {
+                const res = await fetch(`${API_BASE}/skill`);
+                const data = await res.json();
+                const container = document.getElementById("skillsList");
+                container.innerHTML = "";
+                if (data.result && data.data.length > 0) {
+                    data.data.forEach((skill) => {
+                        const col = document.createElement("div");
+                        col.className = "col-lg-2 col-md-4 col-sm-12";
+                        col.innerHTML = `
+              <div class="card text-light mt-3" style="width: 13rem; background-color: #0D1117;">
+                <div class="card-body">
+                  <i class="${skill.iconUrl || 'fa-solid fa-circle-question'}" style="font-size: 40px; margin-bottom: 15px; color: #d4af37;     "></i>
+                  <p class="card-text">${skill.name}</p>
+                  <p class="card-footer">${skill.category}</p>
+                </div>
+              </div>
+            `;
+                        container.appendChild(col);
+                    });
+                } else {
+                    container.innerHTML = "<p style='color:#ccc;'>Teknolojiler bulunamadı.</p>";
+                }
+            } catch (error) {
+                const container = document.getElementById("skillsList");
+                container.innerHTML = "<p style='color:#f00;'>Teknolojiler yüklenirken hata oluştu.</p>";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

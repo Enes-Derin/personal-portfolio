@@ -1,0 +1,13 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.nav-link {
+  transition: all 0.2s ease-in-out;
+}
+.nav-link:hover {
+  background-color: #1a1a1a;
+  border-radius: 5px;
+}
+.nav-link.active {
+  background-color: #292929;
+}
