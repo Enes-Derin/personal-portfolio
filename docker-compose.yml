@@ -4,20 +4,18 @@ services:
     build: .
     ports:
       - "8080:8080"
-    depends_on:
-      mysql:
-        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db4free.net:3306/sql7788016
-      SPRING_DATASOURCE_USERNAME: sql7788016
-      SPRING_DATASOURCE_PASSWORD: 1Ew5EGdjA8
+      SPRING_DATASOURCE_URL: jdbc:mysql://interchange.proxy.rlwy.net:39047/railway
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: QIIyodNlGqKzBpsJmZRBniARXhjMMVIe
+
 
   mysql:
     image: mysql:8
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 1Ew5EGdjA8
-      MYSQL_DATABASE: sql7788016
+      MYSQL_ROOT_PASSWORD: QIIyodNlGqKzBpsJmZRBniARXhjMMVIe
+      MYSQL_DATABASE: railway
     ports:
       - "3306:3306"
     volumes:
