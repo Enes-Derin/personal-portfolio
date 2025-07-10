@@ -176,7 +176,7 @@
         // About bilgisi çek
         async function loadAbout() {
             try {
-                const res = await fetch(`${API_BASE}/about`);
+                const res = await fetch(`${baseUrl}/about`);
                 const data = await res.json();
                 if (data.result && data.data.length > 0) {
                     const about = data.data[0]; // ilk obje alınıyor
@@ -195,7 +195,7 @@
         // Projects bilgisi çek
         async function loadProjects() {
             try {
-                const res = await fetch(`${API_BASE}/project`);
+                const res = await fetch(`${baseUrl}/project`);
                 const data = await res.json();
                 const container = document.getElementById("projectList");
                 container.innerHTML = "";
@@ -230,7 +230,7 @@
         // Skills bilgisi çek
         async function loadSkills() {
             try {
-                const res = await fetch(`${API_BASE}/skill`);
+                const res = await fetch(`${baseUrl}/skill`);
                 const data = await res.json();
                 const container = document.getElementById("skillsList");
                 container.innerHTML = "";
@@ -272,7 +272,7 @@
     <script>
         async function loadSkills() {
             try {
-                const res = await fetch(`${API_BASE}/skill`);
+                const res = await fetch(`${baseUrl}/skill`);
                 const data = await res.json();
                 const container = document.getElementById("skillsList");
                 container.innerHTML = "";
