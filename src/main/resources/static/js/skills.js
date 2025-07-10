@@ -8,7 +8,7 @@ const iconUrlInput = document.getElementById("iconUrl");
 const categoryInput = document.getElementById("category");
 
 const token = localStorage.getItem("accessToken");
-const baseUrl = "http://localhost:8080"; // Deploy ortamına göre değiştirilebilir
+const baseUrl = window.location.origin; // Deploy ortamına göre değiştirilebilir
 
 function showSkillMessage(text, isError = false) {
   skillMessageDiv.textContent = text;
