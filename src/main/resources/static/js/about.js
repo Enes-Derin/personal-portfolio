@@ -23,62 +23,74 @@ function clearForm() {
   showMessage("");
 }
 
-function loadAboutList() {
-  fetch("https://personal-portfolio-z8w0.onrender.com/about", {
-    headers: {
-      Authorization: `Bearer ${token}`
+async function loadAboutList() {
+  try {
+    const res = await fetch("https://personal-portfolio-z8w0.onrender.com/about", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error(`Sunucu hatası: ${res.status} ${res.statusText}`);
     }
-  })
-      .then(res => res.json())
-      .then(data => {
-        if (data.result) {
-          const abouts = data.data;
-          if (!abouts || abouts.length === 0) {
-            aboutListDiv.innerHTML = "<p>Henüz bilgi yok.</p>";
-            return;
-          }
 
-          const first = abouts[0];
-          aboutIdInput.value = first.id;
-          descriptionInput.value = first.description;
-          cvUrlInput.value = first.cvUrl;
-          imageUrlInput.required = false;
+    const data = await res.json();
 
-          let html = "<ul class='list-group'>";
-          abouts.forEach(item => {
-            const baseImageUrl = "https://personal-portfolio-z8w0.onrender.com";
-            html += `<li class="list-group-item list-group-item-dark" style="cursor:pointer" data-id="${item.id}">
-                    <strong>Açıklama:</strong> ${item.description}<br/>
-                    <strong>CV:</strong> <a href="${item.cvUrl}" target="_blank">Görüntüle</a><br/>
-                    <img src="${baseImageUrl + item.imageUrl}" alt="Profil" style="max-width:100px;"><br/>
-                   </li>`;
-          });
-          html += "</ul>";
-          aboutListDiv.innerHTML = html;
+    if (data.result) {
+      const abouts = data.data;
 
-          document.querySelectorAll("#aboutList li").forEach(li => {
-            li.addEventListener("click", () => {
-              const selectedId = li.getAttribute("data-id");
-              const selected = abouts.find(a => a.id == selectedId);
-              if (selected) {
-                aboutIdInput.value = selected.id;
-                descriptionInput.value = selected.description;
-                cvUrlInput.value = selected.cvUrl;
-                imageUrlInput.required = false;
-                showMessage("Güncellemek için form yüklendi.");
-              }
-            });
-          });
-        } else {
-          aboutListDiv.innerHTML = "<p>Veri alınırken hata oluştu.</p>";
-        }
-      })
-      .catch(err => {
-        aboutListDiv.innerHTML = "<p>Sunucuya bağlanılamadı.</p>";
+      if (!abouts || abouts.length === 0) {
+        aboutListDiv.innerHTML = "<p>Henüz bilgi yok.</p>";
+        clearForm();
+        return;
+      }
+
+      // Formu ilk öğe ile doldur
+      const first = abouts[0];
+      aboutIdInput.value = first.id;
+      descriptionInput.value = first.description;
+      cvUrlInput.value = first.cvUrl;
+      imageUrlInput.required = false;
+
+      // Listeyi oluştur
+      const baseImageUrl = "https://personal-portfolio-z8w0.onrender.com";
+      let html = "<ul class='list-group'>";
+      abouts.forEach(item => {
+        html += `
+          <li class="list-group-item list-group-item-dark" style="cursor:pointer" data-id="${item.id}">
+            <strong>Açıklama:</strong> ${item.description}<br/>
+            <strong>CV:</strong> <a href="${item.cvUrl}" target="_blank" rel="noopener noreferrer">Görüntüle</a><br/>
+            <img src="${baseImageUrl + item.imageUrl}" alt="Profil" style="max-width:100px; margin-top:5px;"><br/>
+          </li>
+        `;
       });
+      html += "</ul>";
+      aboutListDiv.innerHTML = html;
+
+      // Liste elemanlarına tıklama eventi ata
+      document.querySelectorAll("#aboutList li").forEach(li => {
+        li.addEventListener("click", () => {
+          const selectedId = li.getAttribute("data-id");
+          const selected = abouts.find(a => a.id == selectedId);
+          if (selected) {
+            aboutIdInput.value = selected.id;
+            descriptionInput.value = selected.description;
+            cvUrlInput.value = selected.cvUrl;
+            imageUrlInput.required = false;
+            showMessage("Güncellemek için form yüklendi.");
+          }
+        });
+      });
+    } else {
+      aboutListDiv.innerHTML = "<p>Veri alınırken hata oluştu.</p>";
+    }
+  } catch (error) {
+    aboutListDiv.innerHTML = `<p>Sunucuya bağlanılamadı: ${error.message}</p>`;
+  }
 }
 
-aboutForm.addEventListener("submit", function (e) {
+aboutForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const formData = new FormData();
@@ -98,28 +110,40 @@ aboutForm.addEventListener("submit", function (e) {
 
   const method = isUpdate ? "PUT" : "POST";
 
-  fetch(url, {
-    method,
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-    body: formData
-  })
-      .then(res => res.json())
-      .then(data => {
-        if (data.result) {
-          showMessage(isUpdate ? "Güncellendi." : "Kaydedildi.");
-          clearForm();
-          loadAboutList();
-        } else {
-          showMessage("Hata: " + (data.errorMessage || ""), true);
-        }
-      })
-      .catch(err => {
-        showMessage("Sunucu hatası: " + err.message, true);
-      });
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: formData
+    });
+
+    if (!res.ok) {
+      // JSON dönmeyebilir, önce status kontrolü yapalım
+      let errorMsg = `Sunucu hatası: ${res.status} ${res.statusText}`;
+      try {
+        const errData = await res.json();
+        if (errData.errorMessage) errorMsg = `Hata: ${errData.errorMessage}`;
+      } catch (_) { /* ignore JSON parse error */ }
+      throw new Error(errorMsg);
+    }
+
+    const data = await res.json();
+
+    if (data.result) {
+      showMessage(isUpdate ? "Güncellendi." : "Kaydedildi.");
+      clearForm();
+      loadAboutList();
+    } else {
+      showMessage("Hata: " + (data.errorMessage || "Bilgi alınamadı."), true);
+    }
+  } catch (error) {
+    showMessage("Sunucu hatası: " + error.message, true);
+  }
 });
 
 clearBtn.addEventListener("click", clearForm);
 
+// Sayfa açılır açılmaz listeyi yükle
 loadAboutList();
