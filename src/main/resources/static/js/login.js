@@ -9,7 +9,8 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const password = document.getElementById("inputPassword3").value;
 
     try {
-        const response = await fetch("/authenticate", {
+        const baseUrl = window.location.origin; // Örnek: https://enesderin.onrender.com
+        const response = await fetch(`${baseUrl}/authenticate`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -26,7 +27,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         } else {
             const errors = result?.exception?.message;
 
-            // 400 ise: validation hataları varsa input altına yaz
             if (response.status === 400 && typeof errors === "object") {
                 if (errors.username) {
                     document.getElementById("usernameError").textContent = errors.username[0];
@@ -35,7 +35,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
                     document.getElementById("passwordError").textContent = errors.password[0];
                 }
             } else {
-                // Diğer durumlar: (örnek: şifre yanlış, kullanıcı yok vs.)
                 const genelMesaj = typeof errors === "string" ? errors : "Giriş başarısız.";
                 document.getElementById("generalError").textContent = genelMesaj;
             }
