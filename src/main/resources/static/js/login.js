@@ -10,7 +10,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
     try {
         const baseUrl = window.location.origin; // Örnek: https://enesderin.onrender.com
-        const response = await fetch(`${baseUrl}/authenticate`, {
+        const response = await fetch(`https://personal-portfolio-z8w0.onrender.com/authenticate`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
